@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+<title>Graphing Calculator - AP Calculus BC Project</title>
+<style>
+
+body {
+	background-color:lightblue;
+	text-align: left;
+	font-family: cursive;
+}
+
+div {
+    display: table-cell;
+    text-align: left;
+	font-size: 30px;
+}
+
+table {
+    border: 1px;
+	margin-left: 20px;
+	margin-top: 10px;
+	font-size: 25px;
+}
+
+canvas {
+	background-color:white;
+	border: solid 5px black;
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 25px;
+}
+
+input {
+	border: solid 1px;
+	font-size: 20px;
+}
+
+</style>
+<!--
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/2.3.0/math.min.js"></script> -->
+
+<script type="text/javascript" src="math.min.js"></script>
+<script type="text/javascript" src="jscolor/jscolor.js"></script>
+</head>
+
+<body>
+
+<table style="width:80%">
+  <tr>
+    <td><h3>Ray Yuan<h3></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td style="valign="middle" align="left"><h1>Graphing Calculator with Calculus functionality</h1></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>
+		<canvas id="grapharea" width="1000" height="1000"></canvas>
+	</td>
+    <td>
+		<div>
+			<h3>Please enter your function here: </h3>
+			<label>
+				<span>f(x) =
+				<input type="text" id="origFunction" style="font-size:40px; width:400; height:50" onkeydown="getFunctionAndDraw(event)" /></br>
+				</span>
+				<span>
+					ConcaveUp <input class="color" id="origFunctionColorConcaveUp" value="#5C0AFF" style="width:80; height:50" onchange="setColorForOriginalFunctionConcaveUp()">
+					ConcaveDown <input class="color" id="origFunctionColorConcaveDown" value="#03FFCD" style="width:80; height:50" onchange="setColorForOriginalFunctionConcaveDown()">
+				</span>
+			</label>
+			<br/><br/>
+
+			<label>
+				<span>
+				<input type="checkbox" id="cbxFirstDerivative" style="zoom:2.5" onclick="draw()"/> First derivative f'(x)
+				</span>
+				<input class="color" id="firstDerivativeFunctionColor" value="#FF29F8" style="width:80; height:50" onchange="setColorForFirstDerivative()">
+			</label>
+			<br/><br/>
+
+			<label>
+				<span>
+				<input type="checkbox" id="cbxSecondDerivative" style="zoom:2.5" onclick="draw()"/> Second derivative f"(x)
+				</span>
+				<input class="color" id="secondDerivativeFunctionColor" value="#3FB056" style="width:80; height:50" onchange="setColorForSecondDerivative()">
+			</label>
+			<br/><br/>
+
+			<label>
+				<span>
+				<input type="checkbox" id="cbxPOI" style="zoom:2.5" onclick="draw()" /> Point of Inflection
+				</span>
+				<input class="color" id="poiColor" value="#FF4F0F" style="width:80; height:50" onchange="setColorForPOI()">
+			</label>
+			<br/><br/>
+
+			<label>
+				<span><input type="checkbox" id="cbxExtrema" style="zoom:2.5" onclick="draw()"/> Relative extrema & discontinuities</span>
+				<input class="color" id="extremaColor" value="#000000" style="width:80; height:50" onchange="setColorForExtrema()">
+			</label>
+			<br/><br/>
+
+			<input type="button" onclick="zoomIn()" value="+" style="zoom:2.0" onclick="draw()"/>
+			<input type="button" onclick="zoomOut()" value="--" style="zoom:2.0" />
+			<br/><br/>
+		</div>
+	</td>
+  </tr>
+</table>
+
+<script type="text/javaScript" src="graphing-calculator.js"></script>
+
+</body>
+</html>
