@@ -7,13 +7,13 @@ var GRIDS = 20;
 var TOTAL_POINTS = 500;
 var LINE_WIDTH = 4;
 var FONT_TYPE = "20px Arial";
-var COLOR_ORIGINAL_FUNCTION_CONCAVEUP = "#" + document.getElementById("origFunctionColorConcaveUp").color; 
-var COLOR_ORIGINAL_FUNCTION_CONCAVEDOWN = "#" + ('FFFFFF' - document.getElementById("origFunctionColorConcaveDown").color); 
-var COLOR_FIRST_DERIVATIVE =  "#" + document.getElementById("firstDerivativeFunctionColor").color;   
-var COLOR_SECOND_DERIVATIVE = "#" + document.getElementById("secondDerivativeFunctionColor").color;  
-var COLOR_POI = "#" + document.getElementById("poiColor").color;  
-var COLOR_EXTREMA = "#" + document.getElementById("extremaColor").color;  
-var COLOR_ASYMPTOTE = "#AA0088" ;  
+var COLOR_ORIGINAL_FUNCTION_CONCAVEUP = "#" + document.getElementById("origFunctionColorConcaveUp").color;
+var COLOR_ORIGINAL_FUNCTION_CONCAVEDOWN = "#" + ('FFFFFF' - document.getElementById("origFunctionColorConcaveDown").color);
+var COLOR_FIRST_DERIVATIVE =  "#" + document.getElementById("firstDerivativeFunctionColor").color;
+var COLOR_SECOND_DERIVATIVE = "#" + document.getElementById("secondDerivativeFunctionColor").color;
+var COLOR_POI = "#" + document.getElementById("poiColor").color;
+var COLOR_EXTREMA = "#" + document.getElementById("extremaColor").color;
+var COLOR_ASYMPTOTE = "#AA0088" ;
 
 var deltaX = 0.02; // interval of X for each point
 var colors = ["#00688B", "#660000", "#9900CC", "#E68A2E", "#006600", "#FF33CC"];
@@ -23,13 +23,13 @@ var scale = 1;
 // Initialize the graphing area, drawing coordinates plane
 function init() {
     context.clearRect(0, 0, GRAPH_AREA_WIDTH, GRAPH_AREA_HEIGHT);
-	
-	COLOR_ORIGINAL_FUNCTION_CONCAVEUP = "#" + document.getElementById("origFunctionColorConcaveUp").color; 
-	COLOR_ORIGINAL_FUNCTION_CONCAVEDOWN = "#" + document.getElementById("origFunctionColorConcaveDown").color; 
-	COLOR_FIRST_DERIVATIVE =  "#" + document.getElementById("firstDerivativeFunctionColor").color;   
-	COLOR_SECOND_DERIVATIVE = "#" + document.getElementById("secondDerivativeFunctionColor").color;  
-	COLOR_POI = "#" + document.getElementById("poiColor").color;  
-	COLOR_EXTREMA = "#" + document.getElementById("extremaColor").color;  
+
+	COLOR_ORIGINAL_FUNCTION_CONCAVEUP = "#" + document.getElementById("origFunctionColorConcaveUp").color;
+	COLOR_ORIGINAL_FUNCTION_CONCAVEDOWN = "#" + document.getElementById("origFunctionColorConcaveDown").color;
+	COLOR_FIRST_DERIVATIVE =  "#" + document.getElementById("firstDerivativeFunctionColor").color;
+	COLOR_SECOND_DERIVATIVE = "#" + document.getElementById("secondDerivativeFunctionColor").color;
+	COLOR_POI = "#" + document.getElementById("poiColor").color;
+	COLOR_EXTREMA = "#" + document.getElementById("extremaColor").color;
 
     drawCoordinate(scale);
 }
@@ -39,7 +39,7 @@ function drawCoordinate(scale)
 	var AXIS_COLOR = "#707070";
     var LINE_COLOR = "#c0c0c0";
     context.fillStyle = LINE_COLOR;
-	
+
 	// draw grids
     for (var i = 0; i < GRIDS; i++) {
         context.fillRect(GRAPH_AREA_WIDTH / GRIDS * i, 0, 1, GRAPH_AREA_HEIGHT);
@@ -59,7 +59,7 @@ function drawCoordinate(scale)
 		context.font = FONT_TYPE;
 		context.fillText(-label, x, GRAPH_AREA_HEIGHT / 2 + 20);
 		if( label != 0)
-		{	
+		{
 			context.fillText(label, GRAPH_AREA_WIDTH/2 + 5 , y + 10 );
 		}
 		x = x + GRAPH_AREA_WIDTH / GRIDS;
@@ -121,7 +121,7 @@ function zoomIn()
 // action for original functional input box 'enter' key click event
 function getFunctionAndDraw(event) {
     if(event.keyCode == 13 ) {
-        draw();        
+        draw();
     }
 }
 
@@ -141,22 +141,22 @@ function graphFunction(strFunction) {
 	var DELTA_X = (GRIDS * scale) * scale/ TOTAL_POINTS;
 	var startIndex = - TOTAL_POINTS/2;
 	var endIndex = TOTAL_POINTS/2;
-	
+
     var prevY = NaN;
     var direction = NaN;
     var concavity = NaN;
     var numberOfReferencePoint = 0;
-	
+
 	strFunction = normalize(strFunction);
 	var isTrig = isTrigFunction(strFunction);
-	
+
 	for (i = -TOTAL_POINTS; i < TOTAL_POINTS; i ++) {
         var x = i * (deltaX*scale);
 	    var y = evalFunction(strFunction, x);
-		
+
 	//	var y1 = evalFunction(strFunction, Number.POSITIVE_INFINITY);
 	//	var y2 = evalFunction(strFunction, Number.NEGATIVE_INFINITY);
-		
+
 		var y1 = evalFunction(strFunction, 1000000);
 		var y2 = evalFunction(strFunction, -1000000);
 		console.log("=========== y1, y2 ====== " + y1 + ", " + y2)
@@ -185,13 +185,13 @@ function graphFunction(strFunction) {
 	//		console.log("HORIZZONTAL Asymptotes: == yLeft = " + y1 + " yRight = " + y2);
 			drawAsymptote(y1, COLOR_ASYMPTOTE, 1, 'HORIZONTAL');
 		}
-        
+
 		// Relative extremas
-		if (document.getElementById("cbxExtrema").checked) 
+		if (document.getElementById("cbxExtrema").checked)
 		{
-			if (direction != NaN) 
+			if (direction != NaN)
 			{
-				if(prevFirstDerivative!= NaN && firstDerivative != NaN 
+				if(prevFirstDerivative!= NaN && firstDerivative != NaN
 					&& prevFirstDerivative / firstDerivative < 0) {
 					drawPoint(x, y, COLOR_EXTREMA, 7, true);
 				}
@@ -200,10 +200,10 @@ function graphFunction(strFunction) {
 				drawPoint(x, prevY, COLOR_EXTREMA, 8, false);
 			}
 		}
-        
+
 		// functional direction ( increasing or decreasing)
         if (firstDerivative != 0) direction = firstDerivative / Math.abs(firstDerivative);
-        
+
 		// second derivative
         if (prevFirstDerivative != NaN) {
             var secondDerivative = Math.round(((firstDerivative) - (prevFirstDerivative)) / (deltaX * scale) * 10000000) / 10000000;
@@ -212,9 +212,9 @@ function graphFunction(strFunction) {
 				drawLineSegment(prevX, prevSecondDerivative, x, secondDerivative, COLOR_SECOND_DERIVATIVE);
 			}
         }
-        
+
 		// remember derivative values for the last drawing point
-        prevFirstDerivative = firstDerivative;
+    prevFirstDerivative = firstDerivative;
 		prevSecondDerivative = secondDerivative;
 
 		// Point of inflection
@@ -240,10 +240,10 @@ function graphFunction(strFunction) {
 				color = COLOR_ORIGINAL_FUNCTION_CONCAVEUP;
 			else
 				color = COLOR_ORIGINAL_FUNCTION_CONCAVEDOWN;
-		}	
+		}
 		drawLineSegment(prevX, prevY, x, y, color);
-        
-		prevX = x;  
+
+		prevX = x;
         prevY = y;
 
 	}
@@ -255,7 +255,7 @@ function labelFunction(text, x, y, color)
 	context.fillStyle = color;
 	x=transformX(x);
 	y=transformY(y);
-	context.fillText(text , x, y); 
+	context.fillText(text , x, y);
 }
 
 // function of drawing the asymptote using given color and line width
@@ -277,7 +277,7 @@ function drawPoint(x, y, color, radius, fill) {
     if (color === undefined) color = colors[0];
     x = transformX(x);
     y = transformY(y);
- 
+
 	context.beginPath();
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
 	if(fill)
@@ -298,7 +298,7 @@ function drawPoint(x, y, color, radius, fill) {
 function drawLineSegment(x1, y1, x2, y2, color, width) {
     if (color == undefined) color = colors[0];
     if (width == undefined) width = LINE_WIDTH;
-	
+
 	if(x1 != NaN && y1 != NaN && x1 != NaN && y2 != NaN && math.abs(y2-y1) < 10)
 	{
 		x1 = transformX(x1);
@@ -314,12 +314,12 @@ function drawLineSegment(x1, y1, x2, y2, color, width) {
 		context.lineWidth = width;
 		context.stroke();
 	}
-} 
+}
 
 function drawDottedLineSegment(x1, y1, x2, y2, color, width) {
     if (color == undefined) color = colors[0];
     if (width == undefined) width = LINE_WIDTH;
-	
+
 	if(x1 != NaN && y1 != NaN && x1 != NaN && y2 != NaN)
 	{
 		x1 = transformX(x1);
@@ -335,7 +335,7 @@ function drawDottedLineSegment(x1, y1, x2, y2, color, width) {
 		context.lineWidth = width;
 		context.stroke();
 	}
-} 
+}
 
 // convert x from math value to graphic value in pixels
 function transformX(x)
@@ -366,7 +366,7 @@ function normalize(strFunction)
 {
 	strFunction = strFunction.toLowerCase();
 	strFunction = strFunction.replace(/^\s+|\s+$/gm,'');
-	// in math.js Math.log(x) = ln(x), 
+	// in math.js Math.log(x) = ln(x),
 	// when given a log function with a different base, typed in function string as log(x, 10), log(x,2), etc
 	if(strFunction == 'lnx' || strFunction == 'ln(x)')
 		strFunction = 'log(x)';
